@@ -1,4 +1,4 @@
-package com.it00zyq.tank;
+package com.it00zyq.tank.enums;
 
 /**
  * 坦克方向

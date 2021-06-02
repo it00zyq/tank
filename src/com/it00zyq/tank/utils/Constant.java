@@ -1,4 +1,4 @@
-package com.it00zyq.tank.constant;
+package com.it00zyq.tank.utils;
 
 /**
  * @author IT00ZYQ
@@ -14,8 +14,8 @@ public interface Constant {
     /**
      * 坦克大小
      */
-    int TANK_WIDTH = 50;
-    int TANK_HEIGHT = 50;
+    int TANK_WIDTH = Images.myTankU.getWidth();
+    int TANK_HEIGHT = Images.myTankU.getHeight();
 
     /**
      * 坦克移动速度
@@ -31,5 +31,16 @@ public interface Constant {
     /**
      * 子弹速度
      */
-    int BULLET_SPEED = 3;
+    int BULLET_SPEED = 15;
+
+    /**
+     * 初始敌方坦克数量
+     */
+    int ENEMY_TANK_COUNT = 5;
+
+    /**
+     * 敌方坦克发射子弹的概率 FIRE_NUM/TOTAL_NUM
+     */
+    int TOTAL_NUM = 80;
+    int FIRE_NUM = 3;
 }

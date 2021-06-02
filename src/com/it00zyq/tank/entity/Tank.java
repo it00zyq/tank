@@ -1,11 +1,14 @@
 package com.it00zyq.tank.entity;
 
-import com.it00zyq.tank.DirectionEnum;
+import com.it00zyq.tank.enums.DirectionEnum;
 import com.it00zyq.tank.TankFrame;
-import com.it00zyq.tank.constant.Constant;
+import com.it00zyq.tank.enums.GroupEnum;
+import com.it00zyq.tank.utils.Constant;
+import com.it00zyq.tank.utils.Images;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 /**
  * @author IT00ZYQ
@@ -16,12 +19,28 @@ public class Tank {
     private int y;
     private DirectionEnum direction;
     private TankFrame tankFrame;
+    private boolean death;
+    private GroupEnum group;
+    private Rectangle r;
 
-    public Tank(int x, int y, DirectionEnum direction, TankFrame tankFrame) {
+    private static Random random = new Random();
+
+    public Tank(int x, int y, DirectionEnum direction, TankFrame tankFrame, GroupEnum group) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.tankFrame = tankFrame;
+        this.death = false;
+        this.group = group;
+        this.r = new Rectangle(x, y, Constant.TANK_WIDTH, Constant.TANK_HEIGHT);
+    }
+
+    public boolean isDeath() {
+        return death;
+    }
+
+    public void setDeath(boolean death) {
+        this.death = death;
     }
 
     public void move(int keyCode) {
@@ -41,13 +60,39 @@ public class Tank {
             default:
                 break;
         }
+        r.setLocation(this.x, this.y);
     }
 
     public void paint(Graphics g) {
         Color color = g.getColor();
         g.setColor(Color.PINK);
-        g.fillRect(x, y, Constant.TANK_WIDTH, Constant.TANK_HEIGHT);
+        g.drawRect(x, y, Constant.TANK_WIDTH, Constant.TANK_HEIGHT);
         g.setColor(color);
+
+        switch(direction) {
+            case LEFT_A:
+                g.drawImage(Images.myTankL, x, y, null);
+                break;
+            case UP_W:
+                g.drawImage(Images.myTankU, x, y, null);
+                break;
+            case DOWN_S:
+                g.drawImage(Images.myTankD, x, y, null);
+                break;
+            case RIGHT_D:
+                g.drawImage(Images.myTankR, x, y, null);
+                break;
+            default:
+                break;
+        }
+
+        // 敌方坦克，发射子弹
+        if (GroupEnum.ENEMY.equals(this.getGroup())) {
+            // 随机发射子弹
+            if (random.nextInt(Constant.TOTAL_NUM) < Constant.FIRE_NUM) {
+                this.fire();
+            }
+        }
     }
 
     /**
@@ -57,7 +102,7 @@ public class Tank {
         int bulletX = this.x + Constant.TANK_WIDTH/2 - Constant.BULLET_WIDTH/2;
         int bulletY = this.y + Constant.TANK_HEIGHT/2 - Constant.BULLET_HEIGHT/2;
         // 添加子弹
-        tankFrame.addBullet(new Bullet(bulletX, bulletY, this.direction, this.tankFrame));
+        tankFrame.addBullet(new Bullet(bulletX, bulletY, this.direction, this.tankFrame, this.group));
     }
 
     /**
@@ -82,14 +127,6 @@ public class Tank {
         }
     }
 
-    public DirectionEnum getDirection() {
-        return direction;
-    }
-
-    public void setDirection(DirectionEnum direction) {
-        this.direction = direction;
-    }
-
     public int getX() {
         return x;
     }
@@ -104,5 +141,25 @@ public class Tank {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public DirectionEnum getDirection() {
+        return direction;
+    }
+
+    public void setDirection(DirectionEnum direction) {
+        this.direction = direction;
+    }
+
+    public GroupEnum getGroup() {
+        return group;
+    }
+
+    public void setGroup(GroupEnum group) {
+        this.group = group;
+    }
+
+    public Rectangle getR() {
+        return r;
     }
 }
