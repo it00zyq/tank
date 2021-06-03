@@ -1,7 +1,6 @@
 package com.it00zyq.tank.entity;
 
 import com.it00zyq.tank.enums.DirectionEnum;
-import com.it00zyq.tank.TankFrame;
 import com.it00zyq.tank.enums.GroupEnum;
 import com.it00zyq.tank.utils.Constant;
 
@@ -25,6 +24,9 @@ public class Bullet {
         this.direction = direction;
         this.group = group;
         this.r = new Rectangle(this.x, this.y, Constant.BULLET_WIDTH, Constant.BULLET_HEIGHT);
+        if (GroupEnum.OUR.equals(this.group)) {
+            new Thread(() -> new Audio("audio/tank_fire.wav").play());
+        }
     }
 
     public void paint(Graphics g) {

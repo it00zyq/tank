@@ -45,28 +45,22 @@ public class Tank {
     public void move() {
         switch (this.direction) {
             case DOWN_S:
-                if (y < Constant.FRAME_HEIGHT - Constant.TANK_HEIGHT) {
-                    y += Constant.TANK_SPEED;
-                }
+                y += Constant.TANK_SPEED;
                 break;
             case RIGHT_D:
-                if (x < Constant.FRAME_WIDTH - Constant.TANK_HEIGHT) {
-                    x += Constant.TANK_SPEED;
-                }
+                x += Constant.TANK_SPEED;
                 break;
             case LEFT_A:
-                if (x > Constant.TANK_HEIGHT) {
-                    x -= Constant.TANK_SPEED;
-                }
+                x -= Constant.TANK_SPEED;
                 break;
             case UP_W:
-                if (y > Constant.TANK_HEIGHT) {
-                    y -= Constant.TANK_SPEED;
-                }
+                y -= Constant.TANK_SPEED;
                 break;
             default:
                 break;
         }
+        // 边界检测
+        this.boundCheck();
         r.setLocation(this.x, this.y);
     }
 
@@ -182,6 +176,24 @@ public class Tank {
                 break;
         }
         r.setLocation(this.x, this.y);
+    }
+
+    /**
+     * 边界检测
+     */
+    private void boundCheck() {
+        if (y < Constant.TANK_HEIGHT) {
+            y = Constant.TANK_HEIGHT;
+        }
+        if (y > Constant.FRAME_HEIGHT - Constant.TANK_HEIGHT) {
+            y = Constant.FRAME_HEIGHT - Constant.TANK_HEIGHT - 5;
+        }
+        if (x < 0) {
+            x = 5;
+        }
+        if (x > Constant.FRAME_WIDTH - Constant.TANK_HEIGHT) {
+            x =  Constant.FRAME_WIDTH - Constant.TANK_HEIGHT - 5;
+        }
     }
 
 

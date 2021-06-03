@@ -8,8 +8,8 @@ public interface Constant {
     /**
      * 游戏窗口的宽高
      */
-    int FRAME_WIDTH = 780;
-    int FRAME_HEIGHT = 810;
+    int FRAME_WIDTH = 780 + 390;
+    int FRAME_HEIGHT = 810 + 200;
 
     /**
      * 坦克大小
