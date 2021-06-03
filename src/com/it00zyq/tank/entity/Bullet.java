@@ -15,16 +15,14 @@ public class Bullet {
     private int x;
     private int y;
     private DirectionEnum direction;
-    private TankFrame tankFrame;
     private GroupEnum group;
     private boolean death;
     private Rectangle r;
 
-    public Bullet(int x, int y, DirectionEnum direction, TankFrame tankFrame, GroupEnum group) {
+    public Bullet(int x, int y, DirectionEnum direction, GroupEnum group) {
         this.x = x;
         this.y = y;
         this.direction = direction;
-        this.tankFrame = tankFrame;
         this.group = group;
         this.r = new Rectangle(this.x, this.y, Constant.BULLET_WIDTH, Constant.BULLET_HEIGHT);
     }

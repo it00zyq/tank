@@ -22,7 +22,6 @@ public class Tank {
     private boolean death;
     private GroupEnum group;
     private Rectangle r;
-
     private static Random random = new Random();
 
     public Tank(int x, int y, DirectionEnum direction, TankFrame tankFrame, GroupEnum group) {
@@ -136,7 +135,7 @@ public class Tank {
         int bulletX = this.x + Constant.TANK_WIDTH/2 - Constant.BULLET_WIDTH/2;
         int bulletY = this.y + Constant.TANK_HEIGHT/2 - Constant.BULLET_HEIGHT/2;
         // 添加子弹
-        tankFrame.addBullet(new Bullet(bulletX, bulletY, this.direction, this.tankFrame, this.group));
+        tankFrame.addBullet(new Bullet(bulletX, bulletY, this.direction, this.group));
     }
 
     /**

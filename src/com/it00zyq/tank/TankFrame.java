@@ -7,6 +7,7 @@ import com.it00zyq.tank.utils.Constant;
 import com.it00zyq.tank.entity.Bullet;
 import com.it00zyq.tank.entity.Tank;
 import com.it00zyq.tank.utils.Images;
+import com.it00zyq.tank.utils.RandomUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -139,6 +140,10 @@ public class TankFrame extends JFrame {
             for (Tank tank : tanks) {
                 bullet.collision(tank);
             }
+        }
+
+        if (tanks.size() < Constant.ENEMY_TANK_COUNT) {
+            this.addTank(new Tank(RandomUtil.randomX(), RandomUtil.randomY(), DirectionEnum.DOWN_S, this, GroupEnum.ENEMY));
         }
 
 //        for (Bullet bullet : bullets) {
