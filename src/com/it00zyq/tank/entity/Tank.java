@@ -51,12 +51,12 @@ public class Tank {
                 }
                 break;
             case RIGHT_D:
-                if (x < Constant.FRAME_WIDTH - Constant.TANK_WIDTH) {
+                if (x < Constant.FRAME_WIDTH - Constant.TANK_HEIGHT) {
                     x += Constant.TANK_SPEED;
                 }
                 break;
             case LEFT_A:
-                if (x > Constant.TANK_WIDTH) {
+                if (x > Constant.TANK_HEIGHT) {
                     x -= Constant.TANK_SPEED;
                 }
                 break;
@@ -166,24 +166,18 @@ public class Tank {
      * 随机改变坦克方向
      */
     private void changeDirectionRandom() {
-        int num = random.nextInt(4);
-        int moveNum = random.nextInt(6);
-        switch (num) {
+        switch (random.nextInt(4)) {
             case 0:
                 this.direction = DirectionEnum.UP_W;
-                this.y -= Constant.TANK_SPEED * moveNum;
                 break;
             case 1:
                 this.direction = DirectionEnum.LEFT_A;
-                this.x -= Constant.TANK_SPEED * moveNum;
                 break;
             case 2:
                 this.direction = DirectionEnum.DOWN_S;
-                this.y += Constant.TANK_SPEED * moveNum;
                 break;
             case 3:
                 this.direction = DirectionEnum.RIGHT_D;
-                this.x += Constant.TANK_SPEED * moveNum;
                 break;
             default:
                 break;
