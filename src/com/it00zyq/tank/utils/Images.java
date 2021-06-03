@@ -11,6 +11,7 @@ import java.util.Objects;
  **/
 public class Images {
     public static BufferedImage myTankU, myTankD, myTankL, myTankR;
+    public static BufferedImage tankU, tankD, tankL, tankR;
     public static BufferedImage[] explodes = new BufferedImage[16];
 
 
@@ -20,6 +21,11 @@ public class Images {
             myTankR = ImageUtil.rotateImage(myTankU, 90);
             myTankD = ImageUtil.rotateImage(myTankU, 180);
             myTankL = ImageUtil.rotateImage(myTankU, -90);
+
+            tankU = ImageIO.read(Objects.requireNonNull(Images.class.getClassLoader().getResourceAsStream("images/BadTank1.png")));
+            tankR = ImageUtil.rotateImage(tankU, 90);
+            tankD = ImageUtil.rotateImage(tankU, 180);
+            tankL = ImageUtil.rotateImage(tankU, -90);
 
             for (int i = 1; i <= explodes.length; i++) {
                 explodes[i-1] = ImageIO.read(Objects.requireNonNull(Images.class.getClassLoader().getResourceAsStream("images/e" + i + ".gif")));

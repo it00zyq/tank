@@ -46,9 +46,6 @@ public class TankFrame extends JFrame {
         super.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                // 坦克移动
-                myTank.move(e.getKeyCode());
-
                 // 改变坦克方向
                 myTank.changeDirection(e.getKeyCode());
                 // 刷新页面，就是调用paint()方法
@@ -131,6 +128,7 @@ public class TankFrame extends JFrame {
         for (int i = 0; i < tanks.size(); i++) {
             tanks.get(i).paint(g);
         }
+
         // 画出爆炸效果
         for (int i = 0; i < explodes.size(); i++) {
             explodes.get(i).paint(g);

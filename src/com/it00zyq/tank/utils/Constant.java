@@ -41,6 +41,6 @@ public interface Constant {
     /**
      * 敌方坦克发射子弹的概率 FIRE_NUM/TOTAL_NUM
      */
-    int TOTAL_NUM = 80;
+    int TOTAL_NUM = 100;
     int FIRE_NUM = 3;
 }

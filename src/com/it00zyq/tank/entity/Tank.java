@@ -43,19 +43,27 @@ public class Tank {
         this.death = death;
     }
 
-    public void move(int keyCode) {
-        switch (keyCode) {
-            case KeyEvent.VK_W:
-                y -= Constant.TANK_SPEED;
+    public void move() {
+        switch (this.direction) {
+            case DOWN_S:
+                if (y < Constant.FRAME_HEIGHT - Constant.TANK_HEIGHT) {
+                    y += Constant.TANK_SPEED;
+                }
                 break;
-            case KeyEvent.VK_A:
-                x -= Constant.TANK_SPEED;
+            case RIGHT_D:
+                if (x < Constant.FRAME_WIDTH - Constant.TANK_WIDTH) {
+                    x += Constant.TANK_SPEED;
+                }
                 break;
-            case KeyEvent.VK_S:
-                y += Constant.TANK_SPEED;
+            case LEFT_A:
+                if (x > Constant.TANK_WIDTH) {
+                    x -= Constant.TANK_SPEED;
+                }
                 break;
-            case KeyEvent.VK_D:
-                x += Constant.TANK_SPEED;
+            case UP_W:
+                if (y > Constant.TANK_HEIGHT) {
+                    y -= Constant.TANK_SPEED;
+                }
                 break;
             default:
                 break;
@@ -69,29 +77,55 @@ public class Tank {
         g.drawRect(x, y, Constant.TANK_WIDTH, Constant.TANK_HEIGHT);
         g.setColor(color);
 
-        switch(direction) {
-            case LEFT_A:
-                g.drawImage(Images.myTankL, x, y, null);
-                break;
-            case UP_W:
-                g.drawImage(Images.myTankU, x, y, null);
-                break;
-            case DOWN_S:
-                g.drawImage(Images.myTankD, x, y, null);
-                break;
-            case RIGHT_D:
-                g.drawImage(Images.myTankR, x, y, null);
-                break;
-            default:
-                break;
+        if (this.group.equals(GroupEnum.OUR)) {
+            switch(direction) {
+                case LEFT_A:
+                    g.drawImage(Images.myTankL, x, y, null);
+                    break;
+                case UP_W:
+                    g.drawImage(Images.myTankU, x, y, null);
+                    break;
+                case DOWN_S:
+                    g.drawImage(Images.myTankD, x, y, null);
+                    break;
+                case RIGHT_D:
+                    g.drawImage(Images.myTankR, x, y, null);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch(direction) {
+                case LEFT_A:
+                    g.drawImage(Images.tankL, x, y, null);
+                    break;
+                case UP_W:
+                    g.drawImage(Images.tankU, x, y, null);
+                    break;
+                case DOWN_S:
+                    g.drawImage(Images.tankD, x, y, null);
+                    break;
+                case RIGHT_D:
+                    g.drawImage(Images.tankR, x, y, null);
+                    break;
+                default:
+                    break;
+            }
         }
 
-        // 敌方坦克，发射子弹
+
+        // 敌方坦克，发射子弹，自动移动
         if (GroupEnum.ENEMY.equals(this.getGroup())) {
             // 随机发射子弹
             if (random.nextInt(Constant.TOTAL_NUM) < Constant.FIRE_NUM) {
                 this.fire();
             }
+            // 随机改变方向和移动
+            if (random.nextInt(Constant.TOTAL_NUM) < Constant.FIRE_NUM) {
+                this.changeDirectionRandom();
+            }
+            // 自动移动
+            this.move();
         }
     }
 
@@ -125,7 +159,38 @@ public class Tank {
             default:
                 break;
         }
+        this.move();
     }
+
+    /**
+     * 随机改变坦克方向
+     */
+    private void changeDirectionRandom() {
+        int num = random.nextInt(4);
+        int moveNum = random.nextInt(6);
+        switch (num) {
+            case 0:
+                this.direction = DirectionEnum.UP_W;
+                this.y -= Constant.TANK_SPEED * moveNum;
+                break;
+            case 1:
+                this.direction = DirectionEnum.LEFT_A;
+                this.x -= Constant.TANK_SPEED * moveNum;
+                break;
+            case 2:
+                this.direction = DirectionEnum.DOWN_S;
+                this.y += Constant.TANK_SPEED * moveNum;
+                break;
+            case 3:
+                this.direction = DirectionEnum.RIGHT_D;
+                this.x += Constant.TANK_SPEED * moveNum;
+                break;
+            default:
+                break;
+        }
+        r.setLocation(this.x, this.y);
+    }
+
 
     public int getX() {
         return x;
