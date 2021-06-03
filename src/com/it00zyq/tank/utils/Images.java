@@ -21,8 +21,8 @@ public class Images {
             myTankD = ImageUtil.rotateImage(myTankU, 180);
             myTankL = ImageUtil.rotateImage(myTankU, -90);
 
-            for (int i = 1; i <= 16; i++) {
-                explodes[i-1] = ImageIO.read(Objects.requireNonNull(Images.class.getClassLoader().getResourceAsStream("images/e" + i + ".git")));
+            for (int i = 1; i <= explodes.length; i++) {
+                explodes[i-1] = ImageIO.read(Objects.requireNonNull(Images.class.getClassLoader().getResourceAsStream("images/e" + i + ".gif")));
             }
 
         } catch (IOException e) {

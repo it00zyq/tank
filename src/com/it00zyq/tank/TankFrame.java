@@ -1,10 +1,12 @@
 package com.it00zyq.tank;
 
+import com.it00zyq.tank.entity.Explode;
 import com.it00zyq.tank.enums.DirectionEnum;
 import com.it00zyq.tank.enums.GroupEnum;
 import com.it00zyq.tank.utils.Constant;
 import com.it00zyq.tank.entity.Bullet;
 import com.it00zyq.tank.entity.Tank;
+import com.it00zyq.tank.utils.Images;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +25,7 @@ public class TankFrame extends JFrame {
     private Tank myTank = new Tank(200, 200, DirectionEnum.UP_W, this, GroupEnum.OUR);
     private List<Tank> tanks = new LinkedList<>();
     private List<Bullet> bullets = new LinkedList<>();
+    private List<Explode> explodes = new LinkedList<>();
 
     public TankFrame() {
         // 设置窗口标题
@@ -107,10 +110,18 @@ public class TankFrame extends JFrame {
         super.paint(g);
         myTank.paint(g);
 
+        for (Tank tank : tanks) {
+            if (tank.isDeath()) {
+                explodes.add(new Explode(tank.getX(), tank.getY()));
+            }
+        }
+
         // 去除已经死亡的子弹
         bullets = bullets.stream().filter(e -> !e.isDeath()).collect(Collectors.toList());
         // 去除已经死亡的坦克
         tanks = tanks.stream().filter(e -> !e.isDeath()).collect(Collectors.toList());
+        // 去除爆炸完成的效果
+        explodes = explodes.stream().filter(e -> e.getStep() < Images.explodes.length - 1).collect(Collectors.toList());
 
         // 使用foreach循环会报错，因为在遍历的同时可能要将飞出边界的子弹从集合中删除
         for (int i = 0; i < bullets.size(); i++) {
@@ -119,6 +130,10 @@ public class TankFrame extends JFrame {
         // 画出敌人坦克
         for (int i = 0; i < tanks.size(); i++) {
             tanks.get(i).paint(g);
+        }
+        // 画出爆炸效果
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
         }
 
         // 碰撞检测
